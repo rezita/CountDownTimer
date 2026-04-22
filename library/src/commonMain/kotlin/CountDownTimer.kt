@@ -1,4 +1,4 @@
-package io.github.kotlin.timer
+package com.github.rezita
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
