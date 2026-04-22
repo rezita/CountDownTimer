@@ -18,6 +18,6 @@ jobs:
           distribution: 'zulu'
           java-version: 21
       - name: Publish to GitHub Packages
-        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository --no-configuration-cache
+        run: ./gradlew publish --no-configuration-cache
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
