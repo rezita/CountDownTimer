@@ -1,7 +1,7 @@
 package io.github.kotlin.timer
 
-import com.github.rezita.CountDownTimer
-import com.github.rezita.TimerState
+import io.github.rezita.CountDownTimer
+import io.github.rezita.TimerState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceTimeBy
