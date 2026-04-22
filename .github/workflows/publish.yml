@@ -1,0 +1,23 @@
+name: Publish
+on:
+  release:
+    types: [released, prereleased]
+jobs:
+  publish:
+    name: Release build and publish
+    runs-on: macOS-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 21
+      - name: Publish to GitHub Packages
+        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository --no-configuration-cache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
