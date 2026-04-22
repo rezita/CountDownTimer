@@ -41,6 +41,7 @@ timer.start(scope)
 // timer.pause()
 // timer.resume(scope)
 // timer.stop()
+//timer.restart(scope)
 ```
 
 ## License
