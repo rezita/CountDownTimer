@@ -1,11 +1,10 @@
 import com.android.build.api.dsl.androidLibrary
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-//import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
-//    alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
 
 group = "io.github.rezita"
@@ -49,36 +48,51 @@ kotlin {
     }
 }
 
-//mavenPublishing {
-//    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-//
-//    signAllPublications()
-//
-//    coordinates(group.toString(), "countdowntimer", version.toString())
-//
-//    pom {
-//        name = "Count Down Timer"
-//        description = "Count Down Timer for KMP (Android and iOS)"
-//        inceptionYear = "2024"
-//        url = "https://github.com/rezita/CountDownTimer"
-//        licenses {
-//            license {
-//                name = "The Apache License, Version 2.0"
-//                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
-//                distribution = "repo"
-//            }
-//        }
-//        developers {
-//            developer {
-//                id = "rezita"
-//                name = "Zita Reiner"
-//                url = "https://github.com/rezita"
-//            }
-//        }
-//        scm {
-//            url = "https://github.com/rezita/CountDownTimer"
-//            connection = "scm:git:git://github.com/rezita/CountDownTimer.git"
-//            developerConnection = "scm:git:ssh://github.com/rezita/CountDownTimer.git"
-//        }
-//    }
-//}
+mavenPublishing {
+    // Only sign if we have the keys
+    if (project.hasProperty("signingInMemoryKey")) {
+        signAllPublications()
+    }
+
+    coordinates(group.toString(), "countdowntimer", version.toString())
+
+    pom {
+        name = "Count Down Timer"
+        description = "Count Down Timer for KMP (Android and iOS)"
+        inceptionYear = "2024"
+        url = "https://github.com/rezita/CountDownTimer"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "repo"
+            }
+        }
+        developers {
+            developer {
+                id = "rezita"
+                name = "Zita Reiner"
+                url = "https://github.com/rezita"
+            }
+        }
+        scm {
+            url = "https://github.com/rezita/CountDownTimer"
+            connection = "scm:git:git://github.com/rezita/CountDownTimer.git"
+            developerConnection = "scm:git:ssh://github.com/rezita/CountDownTimer.git"
+        }
+    }
+}
+
+// Configure GitHub Packages repository
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/rezita/CountDownTimer")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
