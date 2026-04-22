@@ -10,7 +10,7 @@ Add the dependency to your `commonMain` source set:
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.github.rezita:countdowntimer:1.0.0")
+            implementation("io.github.rezita:countdowntimer:1.0.0")
         }
     }
 }

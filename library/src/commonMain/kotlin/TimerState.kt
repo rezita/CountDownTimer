@@ -1,4 +1,4 @@
-package com.github.rezita
+package io.github.rezita
 
 sealed interface TimerState {
     data object Idle : TimerState
