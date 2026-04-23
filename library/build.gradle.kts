@@ -10,6 +10,11 @@ plugins {
 group = "io.github.rezita"
 version = "1.0.0"
 
+println(project.findProperty("mavenCentralUsername"))
+println(project.findProperty("mavenCentralPassword"))
+println(project.findProperty("signingInMemoryKey"))
+println(project.findProperty("signingInMemoryKeyPassword"))
+
 kotlin {
     jvm()
     androidLibrary {
@@ -52,6 +57,7 @@ mavenPublishing {
     // Configure publishing to Maven Central
     // This will default to the standard Sonatype OSSRH.
     // If you need S01, you can set it via gradle.properties or a more specific call if the API is found.
+
     publishToMavenCentral()
     
     // Enable GPG signing
