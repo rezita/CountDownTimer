@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.vanniktech.mavenPublish)
-    `maven-publish`
 }
 
 group = "io.github.rezita"
@@ -25,10 +24,10 @@ kotlin {
         }
 
         compilations.configureEach {
-            compilerOptions.configure {
-                jvmTarget.set(
-                    JvmTarget.JVM_11
-                )
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_11)
+                }
             }
         }
     }
@@ -50,10 +49,13 @@ kotlin {
 }
 
 mavenPublishing {
-    // Only sign if we have the keys
-    if (project.hasProperty("signingInMemoryKey")) {
-        signAllPublications()
-    }
+    // Configure publishing to Maven Central
+    // This will default to the standard Sonatype OSSRH.
+    // If you need S01, you can set it via gradle.properties or a more specific call if the API is found.
+    publishToMavenCentral()
+    
+    // Enable GPG signing
+    signAllPublications()
 
     coordinates(group.toString(), "countdowntimer", version.toString())
 
@@ -80,20 +82,6 @@ mavenPublishing {
             url = "https://github.com/rezita/CountDownTimer"
             connection = "scm:git:git://github.com/rezita/CountDownTimer.git"
             developerConnection = "scm:git:ssh://github.com/rezita/CountDownTimer.git"
-        }
-    }
-}
-
-// Configure GitHub Packages repository
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/rezita/CountDownTimer")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
         }
     }
 }
